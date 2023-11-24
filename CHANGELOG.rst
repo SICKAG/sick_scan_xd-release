@@ -2,15 +2,22 @@
 Changelog for package sick_scan_xd
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.0.1 (2023-10-17)
+3.1.1 (2023-11-24)
 ------------------
-* Rebase feature/bloom_pretest onto master (release 3.0.0)
-* Merge remote-tracking branch 'origin/feature/bloom_pretest' into feature/bloom_pretest
-* Rebase feature/bloom_pretest onto master (release 3.0.0)
-* Preparation for bloom release
-* build messages, script for bloom support
-* Preparation for bloom release
+* bloom pretest with package version 3.1
+* bloom pretest with package version 3.1
 * Contributors: rostest
+
+3.1.0 (2023-11-21)
+------------------
+* Release v3.1.0
+  * add: IMU support for multiScan
+  * add: LaserScan output for picoScan
+  * fix: API reinit
+  * fix: multiScan data output with range filter activated
+  * fix: adapt multiScan startup and shutdown sequence
+  * fix: adaptations for MRS-1000 v2 firmware
+* Contributors: Manuel Aiple
 
 3.0.0 (2023-10-11)
 ------------------

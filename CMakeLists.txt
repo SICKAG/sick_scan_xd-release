@@ -24,7 +24,6 @@ elseif(LDMRS EQUAL 0)
 else()
     set(BUILD_WITH_LDMRS_SUPPORT ON CACHE BOOL "Build ${PROJECT_NAME} with LDMRS support (ON, libsick_ldmrs from https://github.com/SICKAG/libsick_ldmrs required) or without LDMRS support (OFF)" FORCE)
 endif()
-set(BUILD_WITH_LDMRS_SUPPORT OFF CACHE BOOL "Build ${PROJECT_NAME} with LDMRS support (ON, libsick_ldmrs from https://github.com/SICKAG/libsick_ldmrs required) or without LDMRS support (OFF)" FORCE) # Default for bloom builds: LDMRS=0 SCANSEGMENT_XD=0
 
 # SCANSEGMENT_XD/MULTISCAN136 build options
 option(BUILD_WITH_SCANSEGMENT_XD_SUPPORT "Build ${PROJECT_NAME} with SCANSEGMENT_XD support (ON) or without SCANSEGMENT_XD support (OFF)" ON)
@@ -33,7 +32,6 @@ if(SCANSEGMENT_XD EQUAL 0)
 else()
     set(BUILD_WITH_SCANSEGMENT_XD_SUPPORT ON CACHE BOOL "Build ${PROJECT_NAME} with SCANSEGMENT_XD support (ON) or without SCANSEGMENT_XD support (OFF)" FORCE)
 endif()
-set(BUILD_WITH_SCANSEGMENT_XD_SUPPORT OFF CACHE BOOL "Build ${PROJECT_NAME} with SCANSEGMENT_XD support (ON) or without SCANSEGMENT_XD support (OFF)" FORCE) # Default for bloom builds: LDMRS=0 SCANSEGMENT_XD=0
 
 # Linker option visibilty
 option(BUILD_LIB_HIDE_FUNCTIONS "Build ${PROJECT_NAME} library with function hiding except for SickScanApi-functions (ON) or without function hiding (OFF)" ON)
@@ -373,23 +371,9 @@ endif()
 if(${BUILD_WITH_SCANSEGMENT_XD_SUPPORT} OR BUILD_WITH_SCANSEGMENT_XD_SUPPORT EQUAL ON)
     message(STATUS "Building ${PROJECT_NAME} with SCANSEGMENT_XD support")
     add_compile_options(-DSCANSEGMENT_XD_SUPPORT=1)
-    # msgpack11
-    if(WIN32 OR ROS_VERSION EQUAL 0)
-        set(MSGPACK11_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/../msgpack11")
-    else()
-        set(MSGPACK11_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/../msgpack11/include")
-    endif()
-    if(WIN32)
-        set(MSGPACK11_LIBRARIES "msgpack11.lib")
-        link_libraries(${MSGPACK11_LIBRARIES})
-        link_directories("${PROJECT_BINARY_DIR}/msgpack11/$<CONFIGURATION>;${PROJECT_BINARY_DIR}/../msgpack11/$<CONFIGURATION>")
-    else()
-        set(MSGPACK11_LIBRARIES "libmsgpack11.a")
-        link_directories("${PROJECT_BINARY_DIR}/../msgpack11")
-    endif()
-    include_directories(${MSGPACK11_INCLUDE_DIR})
-    # sick_scansegment_xd sources
-    file(GLOB SCANSEGMENT_XD_SOURCES driver/src/sick_scansegment_xd/*.cpp)
+    # msgpack11 sources and header required for SCANSEGMENT_XD support
+    include_directories(include/sick_scansegment_xd/msgpack11)
+    file(GLOB SCANSEGMENT_XD_SOURCES driver/src/sick_scansegment_xd/*.cpp driver/src/sick_scansegment_xd/msgpack11/*.cpp)
 else()
     message(STATUS "Building ${PROJECT_NAME} without SCANSEGMENT_XD support")
 endif()
