@@ -2,6 +2,7 @@
 
 The packages in the `sick_scan_xd` repository were released into the `noetic` distro by running `/usr/bin/bloom-release --rosdistro noetic --track noetic sick_scan_xd --edit` on `Fri, 24 Nov 2023 10:22:15 -0000`
 
+
 The `sick_scan_xd` package was released.
 
 Version of package(s) in repository `sick_scan_xd`:
